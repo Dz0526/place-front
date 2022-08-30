@@ -10,9 +10,10 @@ type Scale = {
 
 type Props = {
   isPinching: boolean;
+  alt: string;
 };
 
-export const MapImage: FC<Props> = ({ isPinching }) => {
+export const MapImage: FC<Props> = ({ alt }) => {
   const [image] = useImage('/map1.png');
   const [scale, setScale] = useState<Scale>({ scaleX: 1, scaleY: 1 });
 
@@ -28,11 +29,10 @@ export const MapImage: FC<Props> = ({ isPinching }) => {
   return (
     <Image
       image={image}
-      alt='map1'
-      width={window.innerWidth}
-      height={window.innerHeight}
+      alt={alt}
+      width={2016}
+      height={1512}
       onWheel={e => handleWheelEvent(e)}
-      draggable={isPinching ? false : true}
     />
   );
 };

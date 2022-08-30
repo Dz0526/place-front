@@ -3,6 +3,7 @@ import { Stage, Layer } from 'react-konva';
 import { MapImage } from './MapImage';
 import { useState } from 'react';
 import { KonvaEventObject } from 'konva/lib/Node';
+import { MapPin } from './MapPin';
 
 type Scale = {
   scaleX: number;
@@ -40,21 +41,25 @@ const StageCompoent: FC = () => {
   };
 
   return (
-    <Stage
-      width={window.innerWidth}
-      height={window.innerHeight}
-      onTouchMove={e => handleTouchMoveEvent(e)}
-      onTouchEnd={() => {
-        setDis(0);
-        setIsPinching(false);
-      }}
-      scaleX={scale.scaleX}
-      scaleY={scale.scaleY}
-    >
-      <Layer>
-        <MapImage isPinching={isPinching} />
-      </Layer>
-    </Stage>
+    <div>
+      <Stage
+        width={window.innerWidth}
+        height={window.innerHeight}
+        onTouchMove={e => handleTouchMoveEvent(e)}
+        onTouchEnd={() => {
+          setDis(0);
+          setIsPinching(false);
+        }}
+        scaleX={scale.scaleX}
+        scaleY={scale.scaleY}
+        draggable={isPinching ? false : true}
+      >
+        <Layer>
+          <MapImage alt='map floor 1' isPinching={isPinching} />
+          <MapPin x={956} y={736} />
+        </Layer>
+      </Stage>
+    </div>
   );
 };
 

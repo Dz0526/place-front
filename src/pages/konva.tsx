@@ -5,7 +5,13 @@ const StageCompoent = dynamic(() => import('../components/StageComponent'), {
 });
 
 const KonvaPage = () => {
-  return <StageCompoent />;
+  return (
+    <>
+      <main>
+        <StageCompoent />
+      </main>
+    </>
+  );
 };
 
 export default KonvaPage;
