@@ -1,12 +1,26 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Layout } from 'components/layouts/Layout';
+import { DefaultSeo } from 'next-seo';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <>
+      <DefaultSeo
+        defaultTitle='Place 部活動の場所を知ろう'
+        description='Place は豊田高専内の部活動の場所を見つけるための地図アプリです'
+        openGraph={{
+          title: 'Place 部活動の場所を知ろう',
+          description:
+            'Place は豊田高専内の部活動の場所を見つけるための地図アプリです',
+          site_name: 'Place',
+          url: '',
+        }}
+      />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
   );
 }
 
