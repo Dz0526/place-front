@@ -41,7 +41,7 @@ const StageCompoent: FC = () => {
   };
 
   return (
-    <div>
+    <div className='bg-black'>
       <Stage
         width={window.innerWidth}
         height={window.innerHeight}
