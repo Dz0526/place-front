@@ -1,16 +1,20 @@
-import { FC } from 'react';
 import { Stage, Layer } from 'react-konva';
 import { MapImage } from './MapImage';
 import { useState } from 'react';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { MapPin } from './MapPin';
+import { Floor } from 'pages/konva';
 
 type Scale = {
   scaleX: number;
   scaleY: number;
 };
 
-const StageCompoent: FC = () => {
+type Props = {
+  floor: Floor;
+};
+
+const StageCompoent = ({ floor }: Props) => {
   const [scale, setScale] = useState<Scale>({ scaleX: 1, scaleY: 1 });
   const [dis, setDis] = useState(0);
   const [isPinching, setIsPinching] = useState(false);
@@ -55,7 +59,13 @@ const StageCompoent: FC = () => {
         draggable={isPinching ? false : true}
       >
         <Layer>
-          <MapImage alt='map floor 1' isPinching={isPinching} />
+          {floor === 1 ? (
+            <MapImage alt='map floor 1' imageName='/map1.png' />
+          ) : floor === 2 ? (
+            <MapImage alt='map floor 2' imageName='/map2.png' />
+          ) : (
+            <MapImage alt='map floor 3' imageName='/map3.png' />
+          )}
           <MapPin x={956} y={736} />
         </Layer>
       </Stage>

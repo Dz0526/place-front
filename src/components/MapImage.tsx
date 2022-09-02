@@ -9,12 +9,12 @@ type Scale = {
 };
 
 type Props = {
-  isPinching: boolean;
   alt: string;
+  imageName: string;
 };
 
-export const MapImage: FC<Props> = ({ alt }) => {
-  const [image] = useImage('/map1.png');
+export const MapImage: FC<Props> = ({ alt, imageName }) => {
+  const [image] = useImage(imageName);
   const [scale, setScale] = useState<Scale>({ scaleX: 1, scaleY: 1 });
 
   const handleWheelEvent = (e: KonvaEventObject<WheelEvent>) => {
