@@ -3,8 +3,8 @@ import { MapImage } from './MapImage';
 import { useState } from 'react';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { MapPin } from './MapPin';
-import { Floor } from 'pages/konva';
 import { Club } from 'mock/api/club';
+import { usePosition } from 'hooks/usePosition';
 
 type Scale = {
   scaleX: number;
@@ -12,14 +12,14 @@ type Scale = {
 };
 
 type Props = {
-  floor: Floor;
   clubData: Club[];
 };
 
-const StageCompoent = ({ floor, clubData }: Props) => {
+const StageCompoent = ({ clubData }: Props) => {
   const [scale, setScale] = useState<Scale>({ scaleX: 1, scaleY: 1 });
   const [dis, setDis] = useState(0);
   const [isPinching, setIsPinching] = useState(false);
+  const { position } = usePosition();
 
   const handleTouchMoveEvent = (e: KonvaEventObject<TouchEvent>) => {
     if (e.evt.changedTouches.length > 1) {
@@ -58,17 +58,19 @@ const StageCompoent = ({ floor, clubData }: Props) => {
       scaleX={scale.scaleX}
       scaleY={scale.scaleY}
       draggable={isPinching ? false : true}
+      x={position.search ? -1084 + window.innerWidth / 2 : 0}
+      y={position.search ? -499 + window.innerHeight / 2 : 0}
     >
       <Layer>
-        {floor === 1 ? (
+        {position.floor === 1 ? (
           <MapImage alt='map floor 1' imageName='/map1.png' />
-        ) : floor === 2 ? (
+        ) : position.floor === 2 ? (
           <MapImage alt='map floor 2' imageName='/map2.png' />
         ) : (
           <MapImage alt='map floor 3' imageName='/map3.png' />
         )}
         {clubData
-          .filter(club => club.floor === floor)
+          .filter(club => club.floor === position.floor)
           .map(club => (
             <MapPin x={club.x} y={club.y} name={club.name} key={club.name} />
           ))}

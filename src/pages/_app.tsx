@@ -2,6 +2,7 @@ import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Layout } from 'components/layouts/Layout';
 import { DefaultSeo } from 'next-seo';
+import { PositionContextProvider } from 'context/PositionContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -17,9 +18,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           url: '',
         }}
       />
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <PositionContextProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </PositionContextProvider>
     </>
   );
 }

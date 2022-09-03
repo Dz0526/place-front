@@ -1,5 +1,12 @@
 import { Floor } from 'pages/konva';
 
+export type Position = {
+  x: number;
+  y: number;
+  floor: Floor;
+  search: boolean;
+};
+
 export type Club = {
   name: string;
   x: number;
@@ -15,3 +22,17 @@ export const clubData: Club[] = [
   { name: 'ロボコンA', x: 958, y: 782, floor: 1 },
   { name: 'ロボコンB', x: 1599, y: 528, floor: 1 },
 ];
+
+export const positionData: Position = {
+  x: 1084,
+  y: 499,
+  floor: 1,
+  search: true,
+};
+
+export const positionDataTwo: Position = {
+  x: 1084,
+  y: 499,
+  floor: 2,
+  search: true,
+};
