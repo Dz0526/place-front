@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { MapPin } from './MapPin';
 import { Floor } from 'pages/konva';
+import { Club } from 'mock/api/club';
 
 type Scale = {
   scaleX: number;
@@ -12,9 +13,10 @@ type Scale = {
 
 type Props = {
   floor: Floor;
+  clubData: Club[];
 };
 
-const StageCompoent = ({ floor }: Props) => {
+const StageCompoent = ({ floor, clubData }: Props) => {
   const [scale, setScale] = useState<Scale>({ scaleX: 1, scaleY: 1 });
   const [dis, setDis] = useState(0);
   const [isPinching, setIsPinching] = useState(false);
@@ -45,31 +47,33 @@ const StageCompoent = ({ floor }: Props) => {
   };
 
   return (
-    <div className='bg-black'>
-      <Stage
-        width={window.innerWidth}
-        height={window.innerHeight}
-        onTouchMove={e => handleTouchMoveEvent(e)}
-        onTouchEnd={() => {
-          setDis(0);
-          setIsPinching(false);
-        }}
-        scaleX={scale.scaleX}
-        scaleY={scale.scaleY}
-        draggable={isPinching ? false : true}
-      >
-        <Layer>
-          {floor === 1 ? (
-            <MapImage alt='map floor 1' imageName='/map1.png' />
-          ) : floor === 2 ? (
-            <MapImage alt='map floor 2' imageName='/map2.png' />
-          ) : (
-            <MapImage alt='map floor 3' imageName='/map3.png' />
-          )}
-          <MapPin x={956} y={736} />
-        </Layer>
-      </Stage>
-    </div>
+    <Stage
+      width={window.innerWidth}
+      height={window.innerHeight}
+      onTouchMove={e => handleTouchMoveEvent(e)}
+      onTouchEnd={() => {
+        setDis(0);
+        setIsPinching(false);
+      }}
+      scaleX={scale.scaleX}
+      scaleY={scale.scaleY}
+      draggable={isPinching ? false : true}
+    >
+      <Layer>
+        {floor === 1 ? (
+          <MapImage alt='map floor 1' imageName='/map1.png' />
+        ) : floor === 2 ? (
+          <MapImage alt='map floor 2' imageName='/map2.png' />
+        ) : (
+          <MapImage alt='map floor 3' imageName='/map3.png' />
+        )}
+        {clubData
+          .filter(club => club.floor === floor)
+          .map(club => (
+            <MapPin x={club.x} y={club.y} name={club.name} key={club.name} />
+          ))}
+      </Layer>
+    </Stage>
   );
 };
 

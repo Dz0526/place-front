@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { FloorButton } from 'components/FloorButton';
+import { clubData } from 'mock/api/club';
 
 const StageCompoent = dynamic(() => import('../components/StageComponent'), {
   ssr: false,
@@ -14,7 +15,7 @@ const KonvaPage = () => {
   return (
     <>
       <main>
-        <StageCompoent floor={floor} />
+        <StageCompoent floor={floor} clubData={clubData} />
         <FloorButton floor={floor} setFloor={setFloor} />
       </main>
     </>
