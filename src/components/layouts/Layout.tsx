@@ -25,7 +25,7 @@ export const Layout = ({ children }: Props) => {
           className='relative grow-0'
         >
           <input
-            className='rounded border-gray-300 border-2  pb-2 pt-2'
+            className='rounded border-gray-300 border-2  pb-2 pt-2 focus:bg-blue-100'
             type='search'
             placeholder='ここで検索'
             required
