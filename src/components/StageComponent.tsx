@@ -6,7 +6,7 @@ import { MapPin } from './MapPin';
 import { Club } from 'mock/api/club';
 import { usePosition } from 'hooks/usePosition';
 
-type Scale = {
+export type Scale = {
   scaleX: number;
   scaleY: number;
 };
@@ -16,10 +16,9 @@ type Props = {
 };
 
 const StageCompoent = ({ clubData }: Props) => {
-  const [scale, setScale] = useState<Scale>({ scaleX: 1, scaleY: 1 });
   const [dis, setDis] = useState(0);
   const [isPinching, setIsPinching] = useState(false);
-  const { position } = usePosition();
+  const { position, dispatch } = usePosition();
 
   const handleTouchMoveEvent = (e: KonvaEventObject<TouchEvent>) => {
     if (e.evt.changedTouches.length > 1) {
@@ -37,11 +36,11 @@ const StageCompoent = ({ clubData }: Props) => {
       }
 
       const newScale: Scale = {
-        scaleX: scale.scaleX * (curDis / lastDis),
-        scaleY: scale.scaleY * (curDis / lastDis),
+        scaleX: position.scale.scaleX * (curDis / lastDis),
+        scaleY: position.scale.scaleY * (curDis / lastDis),
       };
 
-      setScale(newScale);
+      dispatch({ type: 'CHANGE_SCALE', payload: newScale });
       setDis(curDis);
     }
   };
@@ -55,11 +54,17 @@ const StageCompoent = ({ clubData }: Props) => {
         setDis(0);
         setIsPinching(false);
       }}
-      scaleX={scale.scaleX}
-      scaleY={scale.scaleY}
+      scaleX={position.scale.scaleX}
+      scaleY={position.scale.scaleY}
       draggable={isPinching ? false : true}
-      x={position.search ? -1084 + window.innerWidth / 2 : 0}
-      y={position.search ? -499 + window.innerHeight / 2 : 0}
+      x={position.search ? position.x + window.innerWidth / 2 : position.x}
+      y={position.search ? position.y + window.innerHeight / 2 : position.y}
+      onDragMove={e =>
+        dispatch({
+          type: 'CHANGE_COORDINATE',
+          payload: { x: e.target.x(), y: e.target.y(), search: false },
+        })
+      }
     >
       <Layer>
         {position.floor === 1 ? (

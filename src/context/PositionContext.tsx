@@ -1,3 +1,4 @@
+import { Scale } from 'components/StageComponent';
 import { Position } from 'mock/api/club';
 import { Floor } from 'pages/konva';
 import { createContext, Dispatch, ReactNode, useReducer, Reducer } from 'react';
@@ -8,8 +9,16 @@ type Props = {
 
 type ACTION =
   | {
+      type: 'CHANGE_COORDINATE';
+      payload: { x: number; y: number; search: boolean };
+    }
+  | {
       type: 'CHANGE_FLOOR';
       payload: Floor;
+    }
+  | {
+      type: 'CHANGE_SCALE';
+      payload: Scale;
     }
   | {
       type: 'SET_POSITION';
@@ -18,10 +27,19 @@ type ACTION =
 
 const reducerFunc: Reducer<Position, ACTION> = (state, action) => {
   switch (action.type) {
+    case 'CHANGE_COORDINATE':
+      return {
+        ...state,
+        x: action.payload.x,
+        y: action.payload.y,
+        search: action.payload.search,
+      };
     case 'CHANGE_FLOOR':
       return { ...state, floor: action.payload };
+    case 'CHANGE_SCALE':
+      return { ...state, scale: action.payload };
     case 'SET_POSITION':
-      return action.payload;
+      return { ...action.payload };
   }
 };
 
@@ -31,7 +49,13 @@ type PositionContextState = {
 };
 
 export const PositionContext = createContext<PositionContextState>({
-  position: { x: 0, y: 0, floor: 1, search: false },
+  position: {
+    x: 0,
+    y: 0,
+    floor: 1,
+    search: false,
+    scale: { scaleX: 1, scaleY: 1 },
+  },
   dispatch: () => null,
 });
 
@@ -41,6 +65,7 @@ export const PositionContextProvider = ({ children }: Props) => {
     y: 0,
     floor: 1,
     search: false,
+    scale: { scaleX: 1, scaleY: 1 },
   });
 
   return (

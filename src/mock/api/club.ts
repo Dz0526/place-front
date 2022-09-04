@@ -1,3 +1,4 @@
+import { Scale } from 'components/StageComponent';
 import { Floor } from 'pages/konva';
 
 export type Position = {
@@ -5,6 +6,7 @@ export type Position = {
   y: number;
   floor: Floor;
   search: boolean;
+  scale: Scale;
 };
 
 export type Club = {
@@ -28,11 +30,13 @@ export const positionData: Position = {
   y: 499,
   floor: 1,
   search: true,
+  scale: { scaleX: 1, scaleY: 1 },
 };
 
 export const positionDataTwo: Position = {
-  x: 1084,
-  y: 499,
-  floor: 2,
+  x: -1025,
+  y: -775,
+  floor: 1,
   search: true,
+  scale: { scaleX: 1, scaleY: 1 },
 };
