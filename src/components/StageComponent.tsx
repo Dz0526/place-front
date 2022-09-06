@@ -18,6 +18,7 @@ type Props = {
 const StageCompoent = ({ clubData }: Props) => {
   const [dis, setDis] = useState(0);
   const [isPinching, setIsPinching] = useState(false);
+  const [isDrag, setIsDrag] = useState(false);
   const { position, dispatch } = usePosition();
 
   const handleTouchMoveEvent = (e: KonvaEventObject<TouchEvent>) => {
@@ -65,6 +66,9 @@ const StageCompoent = ({ clubData }: Props) => {
           payload: { x: e.target.x(), y: e.target.y(), search: false },
         })
       }
+      onDragStart={() => setIsDrag(true)}
+      onDragEnd={() => setIsDrag(false)}
+      className={`cursor-grab ${isDrag && 'cursor-grabbing'} z-auto`}
     >
       <Layer>
         {position.floor === 1 ? (

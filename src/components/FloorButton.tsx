@@ -10,8 +10,10 @@ export const FloorButton = () => {
       {floorNumbers.map(num => (
         <button
           className={`p-3 text-5xl ${
-            position.floor !== num && 'hover:text-blue-300 hover:text-7xl'
-          } ${position.floor === num && 'text-slate-200'}`}
+            position.floor !== num
+              ? 'hover:text-blue-300 hover:text-7xl'
+              : 'text-slate-200 cursor-not-allowed'
+          }`}
           disabled={position.floor === num}
           key={num}
           value={num}
