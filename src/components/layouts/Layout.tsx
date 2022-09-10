@@ -1,19 +1,21 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { usePosition } from 'hooks/usePosition';
 import { positionDataTwo } from 'mock/api/club';
+import { SearchInput } from 'components/SearchInput';
+import { useFormUi } from 'hooks/useFormUi';
 
 type Props = {
   children: ReactElement;
 };
 
 export const Layout = ({ children }: Props) => {
-  const [clubName, setClubName] = useState('');
   const { dispatch } = usePosition();
+  const { setIsFocusSearchInput } = useFormUi();
 
   return (
-    <>
+    <div onMouseDown={() => setIsFocusSearchInput(false)}>
       <header className='p-5 flex'>
         <h1 className='text-3xl font-bold font-red italic grow'>Place</h1>
         <form
@@ -24,16 +26,7 @@ export const Layout = ({ children }: Props) => {
           }}
           className='relative grow-0'
         >
-          <input
-            className='rounded border-gray-300 border-2  pb-2 pt-2 focus:bg-blue-100'
-            type='search'
-            placeholder='ここで検索'
-            required
-            value={clubName}
-            onChange={e => {
-              setClubName(e.target.value);
-            }}
-          />
+          <SearchInput />
           <button type='submit' className='absolute inset-y-0 right-0 pr-2'>
             <FontAwesomeIcon
               className='hover:text-blue-300'
@@ -46,6 +39,6 @@ export const Layout = ({ children }: Props) => {
       <footer className='text-center'>
         <p>Copyright © 4I team 4</p>
       </footer>
-    </>
+    </div>
   );
 };

@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { Layout } from 'components/layouts/Layout';
 import { DefaultSeo } from 'next-seo';
 import { PositionContextProvider } from 'context/PositionContext';
+import { FormUiContextProvider } from 'context/FormUiContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,9 +20,11 @@ function MyApp({ Component, pageProps }: AppProps) {
         }}
       />
       <PositionContextProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <FormUiContextProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </FormUiContextProvider>
       </PositionContextProvider>
     </>
   );
