@@ -55,6 +55,7 @@ export const PositionContext = createContext<PositionContextState>({
     floor: 1,
     search: false,
     scale: { scaleX: 1, scaleY: 1 },
+    name: '',
   },
   dispatch: () => null,
 });
@@ -66,6 +67,7 @@ export const PositionContextProvider = ({ children }: Props) => {
     floor: 1,
     search: false,
     scale: { scaleX: 1, scaleY: 1 },
+    name: '',
   });
 
   return (

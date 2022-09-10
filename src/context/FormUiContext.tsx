@@ -13,19 +13,29 @@ type Props = {
 type FormUiContextState = {
   isFocusSearchInput: boolean;
   setIsFocusSearchInput: Dispatch<SetStateAction<boolean>>;
+  isMouseOverSuggestion: boolean;
+  setIsMouseOverSuggestion: Dispatch<SetStateAction<boolean>>;
 };
 
 export const FormUiContext = createContext<FormUiContextState>({
   isFocusSearchInput: false,
   setIsFocusSearchInput: () => null,
+  isMouseOverSuggestion: false,
+  setIsMouseOverSuggestion: () => null,
 });
 
 export const FormUiContextProvider = ({ children }: Props) => {
-  const [state, setState] = useState(false);
+  const [isFocusSearchInput, setIsFocusSearchInput] = useState(false);
+  const [isMouseOverSuggestion, setIsMouseOverSuggestion] = useState(false);
 
   return (
     <FormUiContext.Provider
-      value={{ isFocusSearchInput: state, setIsFocusSearchInput: setState }}
+      value={{
+        isFocusSearchInput: isFocusSearchInput,
+        setIsFocusSearchInput: setIsFocusSearchInput,
+        isMouseOverSuggestion,
+        setIsMouseOverSuggestion,
+      }}
     >
       {children}
     </FormUiContext.Provider>

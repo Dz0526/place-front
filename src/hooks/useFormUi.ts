@@ -7,5 +7,7 @@ export const useFormUi = () => {
   return {
     isFocusSearchInput: context.isFocusSearchInput,
     setIsFocusSearchInput: context.setIsFocusSearchInput,
+    isMouseOverSuggestion: context.isMouseOverSuggestion,
+    setIsMouseOverSuggestion: context.setIsMouseOverSuggestion,
   };
 };

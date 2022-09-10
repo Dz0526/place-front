@@ -1,12 +1,27 @@
 import { useFormUi } from 'hooks/useFormUi';
 import { useKeyFoucsControl } from 'hooks/useKeyFoucsControl';
-import { clubData } from 'mock/api/club';
-import { useState } from 'react';
+import { Position } from 'mock/api/club';
+import { Dispatch, SetStateAction } from 'react';
 
-export const SearchInput = () => {
-  const [clubName, setClubName] = useState('');
-  const { refs, inputRef, register } = useKeyFoucsControl();
-  const { isFocusSearchInput, setIsFocusSearchInput } = useFormUi();
+type Props = {
+  clubData: Position[];
+  inputClubName: string;
+  setInputClubName: Dispatch<SetStateAction<string>>;
+  submit: (suggestion?: string) => void;
+};
+
+export const SearchInput = ({
+  inputClubName,
+  setInputClubName,
+  submit,
+  clubData,
+}: Props) => {
+  const { inputRef, register, focusToFirst } = useKeyFoucsControl();
+  const {
+    isFocusSearchInput,
+    setIsFocusSearchInput,
+    setIsMouseOverSuggestion,
+  } = useFormUi();
 
   return (
     <div
@@ -19,9 +34,9 @@ export const SearchInput = () => {
         type='search'
         placeholder='ここで検索'
         required
-        value={clubName}
+        value={inputClubName}
         onChange={e => {
-          setClubName(e.target.value);
+          setInputClubName(e.target.value);
         }}
         list='club-list'
         onFocus={() => {
@@ -30,7 +45,7 @@ export const SearchInput = () => {
         onKeyDown={e => {
           if (e.key == 'ArrowDown') {
             e.preventDefault();
-            refs.current[0].e.focus();
+            focusToFirst();
           }
         }}
         ref={inputRef}
@@ -39,17 +54,25 @@ export const SearchInput = () => {
         <ul className='absolute z-10 bg-white divide-y-2 divide-slate-200 mt-3 rounded'>
           {clubData
             .filter(club =>
-              clubName ? club.name.indexOf(clubName) == 0 : false,
+              inputClubName ? club.name.indexOf(inputClubName) == 0 : false,
             )
             .map((club, index) => (
-              <li
-                tabIndex={0}
-                key={index}
-                className={`pt-2 pl-2 pb-2 pr-10 focus:bg-blue-100 outline-blue-200`}
-                {...register(index)}
-              >
-                {club.name}
-              </li>
+              <a key={index}>
+                <li
+                  tabIndex={0}
+                  key={index}
+                  className={`pt-2 pl-2 pb-2 pr-10 focus:bg-blue-100 hover:bg-blue-100 outline-blue-200 hover:cursor-pointer`}
+                  {...register(index)}
+                  onClick={() => submit(club.name)}
+                  onKeyPress={e => {
+                    if (e.key == 'Enter') submit(club.name);
+                  }}
+                  onMouseOver={() => setIsMouseOverSuggestion(true)}
+                  onMouseOut={() => setIsMouseOverSuggestion(false)}
+                >
+                  {club.name}
+                </li>
+              </a>
             ))}
         </ul>
       )}
