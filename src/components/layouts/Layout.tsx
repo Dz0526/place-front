@@ -2,9 +2,10 @@ import { ReactElement, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { usePosition } from 'hooks/usePosition';
-import { positionDataTwo } from 'mock/api/club';
 import { SearchInput } from 'components/SearchInput';
 import { useFormUi } from 'hooks/useFormUi';
+import { useClub } from 'hooks/useClub';
+import { clubsToPosition, clubToPosition } from 'types/position';
 
 type Props = {
   children: ReactElement;
@@ -14,12 +15,12 @@ export const Layout = ({ children }: Props) => {
   const { dispatch } = usePosition();
   const [clubName, setClubName] = useState('');
   const { setIsFocusSearchInput, isMouseOverSuggestion } = useFormUi();
+  const { club } = useClub();
 
   const submit = (suggestion?: string) => {
     const inputOrSuggestion = suggestion ?? clubName;
-    const positionData = positionDataTwo.find(
-      position => position.name == inputOrSuggestion,
-    );
+    const selectedClub = club.find(c => c.name == inputOrSuggestion);
+    const positionData = selectedClub && clubToPosition(selectedClub);
     if (positionData) {
       dispatch({
         type: 'SET_POSITION',
@@ -49,7 +50,7 @@ export const Layout = ({ children }: Props) => {
             inputClubName={clubName}
             setInputClubName={setClubName}
             submit={submit}
-            clubData={positionDataTwo}
+            clubData={clubsToPosition(club)}
           />
           <button type='submit' className='absolute inset-y-0 right-0 pr-2'>
             <FontAwesomeIcon

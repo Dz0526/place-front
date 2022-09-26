@@ -3,7 +3,7 @@ import { MapImage } from './MapImage';
 import { useState } from 'react';
 import { KonvaEventObject } from 'konva/lib/Node';
 import { MapPin } from './MapPin';
-import { Club } from 'mock/api/club';
+import { Club } from 'context/ClubContext';
 import { usePosition } from 'hooks/usePosition';
 
 export type Scale = {
@@ -79,9 +79,14 @@ const StageCompoent = ({ clubData }: Props) => {
           <MapImage alt='map floor 3' imageName='/map3.png' />
         )}
         {clubData
-          .filter(club => club.floor === position.floor)
+          .filter(club => club.room.stair === position.floor)
           .map(club => (
-            <MapPin x={club.x} y={club.y} name={club.name} key={club.name} />
+            <MapPin
+              x={club.room.positionX}
+              y={club.room.positionY}
+              name={club.name}
+              key={club.name}
+            />
           ))}
       </Layer>
     </Stage>

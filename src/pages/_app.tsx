@@ -4,6 +4,7 @@ import { Layout } from 'components/layouts/Layout';
 import { DefaultSeo } from 'next-seo';
 import { PositionContextProvider } from 'context/PositionContext';
 import { FormUiContextProvider } from 'context/FormUiContext';
+import { ClubContextProvider } from 'context/ClubContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -19,13 +20,15 @@ function MyApp({ Component, pageProps }: AppProps) {
           url: '',
         }}
       />
-      <PositionContextProvider>
-        <FormUiContextProvider>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </FormUiContextProvider>
-      </PositionContextProvider>
+      <ClubContextProvider>
+        <PositionContextProvider>
+          <FormUiContextProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </FormUiContextProvider>
+        </PositionContextProvider>
+      </ClubContextProvider>
     </>
   );
 }

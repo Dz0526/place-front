@@ -1,6 +1,6 @@
 import { useFormUi } from 'hooks/useFormUi';
 import { useKeyFoucsControl } from 'hooks/useKeyFoucsControl';
-import { Position } from 'mock/api/club';
+import { Position } from 'types/position';
 import { Dispatch, SetStateAction } from 'react';
 
 type Props = {

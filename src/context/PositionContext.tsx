@@ -1,5 +1,5 @@
 import { Scale } from 'components/StageComponent';
-import { Position } from 'mock/api/club';
+import { Position } from 'types/position';
 import { Floor } from 'pages/konva';
 import { createContext, Dispatch, ReactNode, useReducer, Reducer } from 'react';
 
