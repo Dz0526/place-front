@@ -1,5 +1,5 @@
 import { Scale } from 'components/StageComponent';
-import { Floor } from 'pages/konva';
+import { Floor } from 'types/position';
 
 export type Position = {
   x: number;

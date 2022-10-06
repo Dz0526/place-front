@@ -6,8 +6,6 @@ const StageCompoent = dynamic(() => import('../components/StageComponent'), {
   ssr: false,
 });
 
-export type Floor = 1 | 2 | 3;
-
 const KonvaPage = () => {
   const { club } = useClub();
   return (

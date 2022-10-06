@@ -1,5 +1,5 @@
 import { usePosition } from 'hooks/usePosition';
-import { Floor } from 'pages/konva';
+import { Floor } from 'types/position';
 
 export const FloorButton = () => {
   const floorNumbers: Floor[] = [1, 2, 3];

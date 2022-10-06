@@ -1,6 +1,5 @@
 import { Scale } from 'components/StageComponent';
-import { Position } from 'types/position';
-import { Floor } from 'pages/konva';
+import { Position, Floor } from 'types/position';
 import { createContext, Dispatch, ReactNode, useReducer, Reducer } from 'react';
 
 type Props = {
